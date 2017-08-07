@@ -1,0 +1,40 @@
+.container {
+	
+}
+
+.full-width {	
+	width: 100%;
+	color: #fff;
+	background-color: #400080;
+	padding: 20px;
+}
+
+.full-width-extra {
+	color: #000;
+	background-color: #e5007d;
+	height: 70px;
+}
+
+h1,#cabezera_{
+/*h1,.cabezera,span,#cabezera_,a{*/
+	position: absolute;
+  	top: -4px; 
+  	left: 60px;
+  	
+}
+
+.cdmx{
+/*#cabezera3{*/
+	position: absolute;
+  	top: -4px; 
+  	right: 20px
+}
+
+
+#maps{
+    float: left;
+    width: 48%;
+    height: 40%;
+    padding: 0px;
+    margin: 0px;
+}

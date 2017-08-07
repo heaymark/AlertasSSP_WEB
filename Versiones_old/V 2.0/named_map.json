@@ -1,0 +1,90 @@
+{
+    "version": "0.0.1",
+    "name": "datamap",
+    "auth": {
+    	"method": "open"
+    },
+    "placeholders" : {
+        "layer0": {
+          "type": "number",
+          "default": 0
+        },
+        "layer1": {
+          "type": "number",
+          "default": 0
+        },
+         "layer2": {
+          "type": "number",
+          "default": 0
+        },
+         "layer3": {
+          "type": "number",
+          "default": 0
+        },
+        "layer4": {
+          "type": "number",
+          "default": 0
+        }
+    },
+    "layergroup": {
+        "version": "1.0.1",
+        "layers": [
+            {
+                "type": "cartodb",
+                "options": {
+                    "cartocss_version": "2.1.1", //verion de carto css
+                    "layer_name": "delegaciones_df", //nombre de la capa en el mapa
+                    "cartocss": "#layer { marker-width: 7; marker-fill: #bf6dca; marker-fill-opacity: 1; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #991f1f; marker-line-opacity: 1; }", //todas las reglas con las cuales se visualizara el dataset
+                    "sql": "SELECT * FROM \"develop\".delegaciones_df where <%= layer0 %> = 1" //el sql al caul nos vamoas a referir
+                }
+            },
+            {
+                "type": "cartodb",
+                "options": {
+                    "cartocss_version": "2.1.1",
+                    "layer_name": "colonias_ok",
+                    "cartocss": "#layer { marker-width: 7; marker-fill: #6dca91; marker-fill-opacity: 1; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }",
+                    "sql": "SELECT * FROM \"finanzasdf-admin\".colonias_ok where <%= layer1 %> = 1"
+                }
+            },
+            {
+                "type": "cartodb",
+                "options": {
+                    "cartocss_version": "2.1.1",
+                    "layer_name": "predios_origin",
+                    "cartocss": "#layer { marker-width: 7; marker-fill: #a7ca6d; marker-fill-opacity: 1; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }",
+                    "sql": "SELECT * FROM \"finanzasdf-admin\".predios_origin where <%= layer2 %> = 1"
+                }
+            },
+            {
+                "type": "cartodb",
+                "options": {
+                    "cartocss_version": "2.1.1",
+                    "layer_name": "educacion_basica",
+                    "cartocss": "#layer { marker-width: 7; marker-fill: #708fe0; marker-fill-opacity: 1; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }",
+                    "sql": "SELECT * FROM \"finanzasdf-admin\".escuelas_nivel_basico where <%= layer3 %> = 1"
+                }
+            }
+
+        ]
+    },
+    "view": {  //vista en el visor inivio  
+        "zoom": 13,  //nivel de zoom
+        "center": { //8 decimales minimo para  disminuir el margen de error
+            "lng": -99.14645, //longitud
+            "lat": 19.42523 //latitud 
+        },
+        "bounds": { //se define el cuadro maximo donde se permite el zoom
+            "west": -45, //oeste
+            "south": -45, //sur
+            "east": 45, //este
+            "north": 45 //norte
+        }
+    }
+}
+
+
+//interactivity es con que campos se va a trabajr
+//named_map.json
+//curl -x 'poner proyx
+//curl -X POST -H 'Content-Type: application/json' -d @'(Ruta donde esta el archivo json)' 'http://pedrovaldez.carto.com/api/v1/map/named?api_key='

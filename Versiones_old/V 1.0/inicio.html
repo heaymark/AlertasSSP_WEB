@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Demo Visor Alertas</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> <!-- movil -->
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>  <!-- caracteres -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" /> <!-- icono de carto -->
+	<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> <!-- libreria de carto -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<style type="text/css">
+		.layer_selector {
+			background: #fff;
+			border-radius: 4px;
+			padding: 0;
+			border: 1px solid #999999;
+			width: 150px;
+			height: auto;
+			box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px;
+			font: 11px 'Helvetica';
+			position: absolute;
+			right: 20px;
+			top: 8px;
+			list-style-type: none;
+		}
+
+		.layer_selector > p {
+			font-weight: bold;
+			color: #666666;
+			padding: 14px 14px 12px 14px;
+			cursor: pointer;
+			border-bottom: 1px solid #999;
+		}
+
+		.layer_selector li .item{
+			padding: 8px;
+			font-size: 11px;
+			color: #222;
+			cursor: pointer;
+		}
+
+		.layer_selector li:not(:last-child) {
+			border-bottom: 1px solid #999;
+		}
+
+		.layer_selector li:hover {
+			background-color: #e5e5e5;
+			cursor: pointer;
+		}
+
+		.item {
+			margin-left: 8px;
+			font-size: 12pt;
+
+			color: #222;
+			cursor: pointer;
+		}
+
+		.subitem {
+			margin-left: 20px;
+			font-size: 10pt;
+
+			color: #222;
+			cursor: pointer;
+		}
+
+		#cartodb-logo a{
+			pointer-events : none;
+		}
+	</style>
+ 	<script type="css/cartodb" id="markerPoint">
+    	#sector_policia [zoom >= 13]{
+               marker-fill-opacity: 1;
+               marker-fill: #333333;
+               marker-line-color: #229A00;
+               marker-line-width: 1;
+               marker-line-opacity: 1;
+               marker-placement: point;
+               marker-type: ellipse;
+               marker-width: 10;
+               marker-allow-overlap: true;
+		}
+
+		#sector_policia[zoom >= 13][delegacion= "AZCAPOTZALCO"] {
+		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
+		   marker-fill: #333333;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion= "XOCHIMILCO"] {
+		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
+		   marker-fill: #333333;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}   
+		#sector_policia[zoom >= 13][delegacion="GUSTAVO A. MADERO"] {
+		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
+		   marker-fill: #B2DF8A;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="MAGDALENA CONTRERAS"] {
+		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
+		   marker-fill: #B2DF8A;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="IZTACALCO"] {
+		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/home84.svg");
+		   marker-fill: #FF7F00;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="IZTAPALAPA"] {
+		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/rail-metro-18.svg");
+		  	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="MILPA ALTA"] {
+		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/soccer1.svg");
+		   marker-fill: #33A02C;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="ALVARO OBREGON"] {
+		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building22.svg");
+		  	marker-fill: #FB9A99;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="TLALPAN"] {
+		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/bag1.svg");
+		  	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="BENITO JUAREZ"] {
+		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building24.svg");
+		  	marker-fill: #E31A1C;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 13][delegacion="CUAUHTEMOC"] {
+		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/sailboat5.svg");
+		  	marker-fill: #FDBF6F;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 14][delegacion="VENUSTIANO CARRANZA"] {
+		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/church1.svg");
+		 	marker-fill: #FF4455;
+		 	marker-width: 25;
+		}
+		#sector_policia[zoom >= 14][delegacion="TLALPAN"] {
+		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 14][delegacion="COYOACAN"] {
+		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/emergency-telephone-18.svg");
+		 	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 14][delegacion="CUAJIMALPA"] {
+		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 14][delegacion="TLAHUAC"] {
+		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/industrial-18.svg");
+		 	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+		#sector_policia[zoom >= 14][delegacion="MIGUEL HIDALGO"] {
+		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/danger-18.svg");
+		 	marker-fill: #FF4455;
+		  	marker-width: 15;
+		  	marker-height : 15;
+		}
+	</script>
+    
+	<script type="css/cartodb" id="markerManzana">
+		#colonias_ok[zoom >= 12] {
+		   polygon-opacity: 0.5;
+		   line-color: #FFF;
+		   line-width: 1;
+		   line-opacity: 0.5;
+		}
+
+		#colonias_ok[zoom >= 12][nombre_id=10] {
+		   polygon-fill: #A6CEE3;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=20] {
+		   polygon-fill: #1F78B4;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=30] {
+		   polygon-fill: #B2DF8A;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=80] {
+		   polygon-fill: #33A02C;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=40] {
+		   polygon-fill: #FB9A99;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=70] {
+			polygon-fill: #E31A1C;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=60] {
+		   polygon-fill: #FDBF6F;
+		}
+		#colonias_ok[zoom >= 12][nombre_id>=50] {
+		   polygon-fill: #FF7F00;
+		}
+	</script>	
+</head>
+<body>
+    <div class="full-width full-width-extra">
+		<h1 id="cabezera">
+			<span class="cabezera_">
+	      		<a href="https://sig.cdmx.gob.mx">
+	        		<img id="logo" src="img/MX_logo_GISCDMX_Smon-cab.svg" alt="Tu CDMX">
+	      		</a>
+      		</span>
+	      	<span class="cabezera3">
+		      	<a href="#">
+		      		<img src="img/MX_logo_CDMX_blanco2.svg" id="cdmx">
+		    	</a>
+	    	</span>
+      	</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 columna">
+            	<form role="form" action="">
+              <div class="form-group">
+                <label>Primer Grupo de Selección</label>
+                <p class="form-control-static">Opcion numero 1 a elegir:</p>
+              </div>
+
+              <div class="form-group">
+                <select class="form-control">
+                  <option>Rojo</option>
+                  <option>Amarillo</option>
+                  <option>Azul</option>
+                  <option>Verde</option>
+                  <option>Violeta</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <p class="form-control-static">Opcion numero 2 a elegir:</p>
+              </div>
+              <div class="form-group">
+                <select class="form-control">
+                  <option>Rojo</option>
+                  <option>Amarillo</option>
+                  <option>Azul</option>
+                  <option>Verde</option>
+                  <option>Violeta</option>
+                </select>
+              </div>
+            	</form>
+          	</div>
+          	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columna" style="height: 500px;">
+          		<div id="maps"></div>
+          	</div>
+        </div>
+    </div>  
+ 
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 columna">
+            <form role="form" action="">
+              <div class="form-group">
+                <label>Segundo Grupo de Selección</label>
+                <p class="form-control-static">Opcion numero 1 a elegir:</p>
+              </div>
+
+              <div class="form-group">
+                <select class="form-control">
+                  <option>Rojo</option>
+                  <option>Amarillo</option>
+                  <option>Azul</option>
+                  <option>Verde</option>
+                  <option>Violeta</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <p class="form-control-static">Opcion numero 2 a elegir:</p>
+              </div>
+              <div class="form-group">
+                <select class="form-control">
+                  <option>Rojo</option>
+                  <option>Amarillo</option>
+                  <option>Azul</option>
+                  <option>Verde</option>
+                  <option>Violeta</option>
+                </select>
+              </div>
+            </form>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columna">
+          <div class="form-group">
+            <label>Detalles</label>
+            <p class="form-control-static">Contenido2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis eaque a ducimus, vero atque dolorum deleniti quos officiis, praesentium, porro facere nulla voluptates non! Voluptate quibusdam quis modi facere nulla vitae in, similique sunt. Recusandae ad quisquam consectetur cum possimus illo beatae quibusdam dolor soluta, fuga a, eum ipsa natus fugiat. Deserunt earum praesentium magnam aspernatur voluptatibus illo, a beatae qui tempore maiores. Nostrum optio harum quod quasi quo dolor impedit. Reiciendis cumque repudiandae quas ratione voluptates blanditiis delectus vero corporis, quam reprehenderit distinctio sapiente, animi sint impedit</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<!-- <script src='js/cartodb.js'></script>	 -->
+	<script src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script>	
+	<script src="js/maps.js"></script>
+	<!-- <script src="main.js"></script> -->
+	<script type="text/javascript" src="js/controls.js"></script>
+</body>
+</html>

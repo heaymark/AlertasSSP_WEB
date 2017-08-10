@@ -7,8 +7,15 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" /> <!-- icono de carto -->
+	<!-- <script src='js/cartodb.js'></script>	 -->
+	<script src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script>	
+	<script src="js/maps.js"></script>
+	<!-- <script src="main.js"></script> -->
+	<script type="text/javascript" src="js/controls.js"></script>
+	<script type="text/javascript" src="js/highcharts.js"></script>
+	<script type="text/javascript" src="js/exporting.js"></script>
 	<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> <!-- libreria de carto -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<style type="text/css">
@@ -221,6 +228,7 @@
 	</script>	
 </head>
 <body>
+    
     <div class="full-width full-width-extra">
 		<h1 id="cabezera">
 			<span class="cabezera_">
@@ -235,93 +243,75 @@
 	    	</span>
       	</h1>
     </div>
+    <br>
+	
+	<div class="container-fluid">
+	    <div class="container">
+	        <div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 columna">
+	          		<form role="form" action="">
+	              		<div class="form-group">
+	                		<p class="form-control-static">Sector a elegir:</p>
+	              		</div>
 
-    <div class="container">
-        <div class="row">
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 columna">
-          <form role="form" action="">
-              <div class="form-group">
-                
-                <p class="form-control-static">Sector a elegir:</p>
-              </div>
+						<div class="form-group">
+							<select id="sectores" class="form-control">
+							</select>
+						</div>
 
-              <div class="form-group">
-                <select id="sectores" class="form-control">
-                  
-                </select>
-              </div>
+						<div class="form-group">
+							<p class="form-control-static">Cuadrante a elegir:</p>
+						</div>
+			            <div class="form-group">
+	                		<select id="cuadrante" class="form-control">
+	                		</select>
+						</div>
 
-              <div class="form-group">
-              	<p class="form-control-static">Cuadrante a elegir:</p>
-              </div>
-              <div class="form-group">
-                	<select id="cuadrante" class="form-control">
-                  
-                	</select>
-							</div>
+						<div class="form-group">
+							<p class="form-control-static">Tipos de alertas:</p><br>
+							<label class="radio-inline">
+							  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Alertas de alto impacto
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Alertas de bajo impacto
+							</label>
+						</div>
 
-							<div class="form-group">
-                
-                <p class="form-control-static">Alertas de bajo impacto:</p>
-              </div>
-
-              <div class="form-group">
-                <select class="form-control">
-                  
-                </select>
-              </div>
-
-              <div class="form-group">
-                <p class="form-control-static">Alertas de alto impacto:</p>
-              </div>
-              <div class="form-group">
-                <select class="form-control">
-                  
-                </select>
-              </div>
-								
-
-
-          </form>
-        </div>
-          	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columna">
-          		<div id="maps" style="height: 350px;"></div>
-							<label>Detalle de alertas</label>
-            <table class="table">
+	          		</form>
+	        	</div>
+	          	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columna">
+	          		<div id="maps" style="height: 800px;"></div>
+						<!-- <label>Detalle de alertas</label>
+	            		<table class="table">
 							<thead>
-									<tr>
-										<td>Asociacion</td>
-										<td>Cadena</td>
-										<td>Detalle de la Alarma</td>
-										<td>Nombre del establecimiento</td>
-										<td>Segundos de duracion</td>
-									</tr>
+								<tr>
+									<td>Asociacion</td>
+									<td>Cadena</td>
+									<td>Detalle de la Alarma</td>
+									<td>Nombre del establecimiento</td>
+									<td>Segundos de duracion</td>
+								</tr>
 							</thead>
 							<tbody id="tbldetalle"></tbody>
-						</table>
-						</div>
-        </div>
-    </div>  
- 
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 columna">
-            <form role="form" action="">
-              
-            </form>
-        </div>
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columna">
-          <div class="form-group">
-            
-          </div>
-        </div>
-      </div>
-    </div>
-
-	<!-- <script src='js/cartodb.js'></script>	 -->
-	<script src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script>	
-	<script src="js/maps.js"></script>
-	<!-- <script src="main.js"></script> -->
-	<script type="text/javascript" src="js/controls.js"></script>
+						</table> -->
+				</div>
+	        </div>
+	    </div>  
+	 
+	    <div class="container">
+			<div class="row">
+	        	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 columna">
+	            	<form role="form" action="">
+	              <P>Aqui va la grafica</P>
+		            </form>
+	        	</div>
+	        	<!-- <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columna">
+	        		<div class="form-group">
+	        		<p>Esto no va</p>
+	          		</div>
+	        	</div> -->
+	     	</div>
+	    </div>
+	</div>
 </body>
 </html>

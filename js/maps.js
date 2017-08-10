@@ -49,9 +49,7 @@ $(function(){
 	  			// interactivity: "cartodb_id,colonia" //campos con los cuales se va interactuar 
 			});
 
-
-
-
+		//se crea objeto para sql
 		objsql = new cartodb.SQL({
     		user:"sspcdmx",
 		});

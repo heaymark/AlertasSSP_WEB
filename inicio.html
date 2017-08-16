@@ -4,22 +4,22 @@
 	<title>Demo Visor Alertas</title>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> <!-- movil -->
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>  <!-- caracteres -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- compativilidad -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- dispositivos -->
 	<link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" /> <!-- icono de carto -->
 	<!-- <script src='js/cartodb.js'></script>	 -->
-	<script src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script>	
-	<script src="js/maps.js"></script>
+	<script type="text/javascript" src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script>	
+	<script type="text/javascript" src="js/maps.js"></script>
 	<!-- <script src="main.js"></script> -->
 	<script type="text/javascript" src="js/controls.js"></script>
 	<script type="text/javascript" src="js/highcharts/highcharts_org.js"></script>
 	<script type="text/javascript" src="js/highcharts/exporting.js"></script>
 	<script type="text/javascript" src="js/highcharts/themes/sand-signika.js"></script>
 	<script type="text/javascript" src="js/highcharts/graphics3.js"></script>
-	<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> <!-- libreria de carto -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link type="text/css" rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> <!-- libreria de carto -->
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+	<link type="text/css" rel="stylesheet" href="css/main.css">
 	<style type="text/css">
 		.layer_selector {
 			background: #fff;
@@ -83,114 +83,116 @@
  	<script type="css/cartodb" id="markerPoint">
     	#sector_policia [zoom >= 13]{
                marker-fill-opacity: 1;
-               marker-fill: #333333;
-               marker-line-color: #229A00;
+               opacity: 0.1;
+               marker-fill: #fff;
+               // marker-fill: #333333;
+               // marker-line-color: #229A00;
                marker-line-width: 1;
                marker-line-opacity: 1;
-               marker-placement: point;
+               // marker-placement: point;
                marker-type: ellipse;
                marker-width: 10;
                marker-allow-overlap: true;
 		}
 
 		#sector_policia[zoom >= 13][delegacion= "AZCAPOTZALCO"] {
-		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
-		   marker-fill: #333333;
+		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
+		   // marker-fill: #333333;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion= "XOCHIMILCO"] {
-		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
-		   marker-fill: #333333;
+		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
+		   // marker-fill: #333333;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}   
 		#sector_policia[zoom >= 13][delegacion="GUSTAVO A. MADERO"] {
-		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
-		   marker-fill: #B2DF8A;
+		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
+		   // marker-fill: #B2DF8A;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="MAGDALENA CONTRERAS"] {
-		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
-		   marker-fill: #B2DF8A;
+		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
+		   // marker-fill: #B2DF8A;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="IZTACALCO"] {
-		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/home84.svg");
-		   marker-fill: #FF7F00;
+		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/home84.svg");
+		   // marker-fill: #FF7F00;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="IZTAPALAPA"] {
-		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/rail-metro-18.svg");
-		  	marker-fill: #FF4455;
+		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/rail-metro-18.svg");
+		  	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="MILPA ALTA"] {
-		   marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/soccer1.svg");
-		   marker-fill: #33A02C;
+		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/soccer1.svg");
+		   // marker-fill: #33A02C;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="ALVARO OBREGON"] {
-		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building22.svg");
-		  	marker-fill: #FB9A99;
+		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building22.svg");
+		  	// marker-fill: #FB9A99;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="TLALPAN"] {
-		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/bag1.svg");
-		  	marker-fill: #FF4455;
+		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/bag1.svg");
+		  	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="BENITO JUAREZ"] {
-		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building24.svg");
-		  	marker-fill: #E31A1C;
+		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building24.svg");
+		  	// marker-fill: #E31A1C;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 13][delegacion="CUAUHTEMOC"] {
-		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/sailboat5.svg");
-		  	marker-fill: #FDBF6F;
+		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/sailboat5.svg");
+		  	// marker-fill: #FDBF6F;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 14][delegacion="VENUSTIANO CARRANZA"] {
-		   	marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/church1.svg");
-		 	marker-fill: #FF4455;
+		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/church1.svg");
+		 	// marker-fill: #FF4455;
 		 	marker-width: 25;
 		}
 		#sector_policia[zoom >= 14][delegacion="TLALPAN"] {
-		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
-		 	marker-fill: #FF4455;
+		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 14][delegacion="COYOACAN"] {
-		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/emergency-telephone-18.svg");
-		 	marker-fill: #FF4455;
+		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/emergency-telephone-18.svg");
+		 	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 14][delegacion="CUAJIMALPA"] {
-		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
-		 	marker-fill: #FF4455;
+		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 14][delegacion="TLAHUAC"] {
-		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/industrial-18.svg");
-		 	marker-fill: #FF4455;
+		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/industrial-18.svg");
+		 	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
 		#sector_policia[zoom >= 14][delegacion="MIGUEL HIDALGO"] {
-		marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/danger-18.svg");
-		 	marker-fill: #FF4455;
+		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/danger-18.svg");
+		 	// marker-fill: #FF4455;
 		  	marker-width: 15;
 		  	marker-height : 15;
 		}
@@ -204,28 +206,28 @@
 		}
 
 		#colonias_ok[zoom >= 12][nombre_id=10] {
-		   polygon-fill: #A6CEE3;
+		   // polygon-fill: #A6CEE3;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=20] {
-		   polygon-fill: #1F78B4;
+		   // polygon-fill: #1F78B4;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=30] {
-		   polygon-fill: #B2DF8A;
+		   // polygon-fill: #B2DF8A;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=80] {
-		   polygon-fill: #33A02C;
+		   // polygon-fill: #33A02C;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=40] {
-		   polygon-fill: #FB9A99;
+		   // polygon-fill: #FB9A99;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=70] {
-			polygon-fill: #E31A1C;
+			// polygon-fill: #E31A1C;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=60] {
-		   polygon-fill: #FDBF6F;
+		   // polygon-fill: #FDBF6F;
 		}
 		#colonias_ok[zoom >= 12][nombre_id>=50] {
-		   polygon-fill: #FF7F00;
+		   // polygon-fill: #FF7F00;
 		}
 	</script>	
 </head>
@@ -246,7 +248,7 @@
     </div>
     <br>
 	<div class="container-fluid">
-	    <div class="container">
+	    <!-- <div class="container"> -->
 	        <div class="row">
 				<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 columna">
 	          		<form role="form" action="">
@@ -267,10 +269,10 @@
 						<div class="form-group">
 							<p class="form-control-static">Tipos de alertas:</p><br>
 							<label class="radio-inline">
-							  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Alertas de alto impacto
+							  <input type="radio" name="alerta" id="aai" value="alertaaltoimpacto"> Alertas de alto impacto
 							</label>
 							<label class="radio-inline">
-							  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Alertas de bajo impacto
+							  <input type="radio" name="alerta" id="abi" value="alertabajoimpacto"> Alertas de bajo impacto
 							</label>
 						</div>
 	          		</form>
@@ -295,7 +297,9 @@
 						</table> -->
 				</div>
 	        </div>
-	    </div>  
+	    <!-- </div>   -->
 	</div>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/events.js"></script>
 </body>
 </html>

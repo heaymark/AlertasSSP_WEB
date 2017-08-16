@@ -15,7 +15,6 @@ var paramlayerbase = {
 };
  
 var parammapbase = {
-	// center : new L.LatLng(19.42523, -99.14645),
     center: new L.LatLng(19.33123050921937,-99.09942626953125),
 	zoom : 10,
 	minZoom: 0,
@@ -36,17 +35,13 @@ $(function(){
 	cartodb.createLayer(maps,viz) //aqui se jala el mapa que esta en el visor, objeto del mapa y variable viz
 		.addTo(maps)
 		.on('done', function(layer) {
-
 		lyrs = layer;
-
 
 		/*** Agregar una capa al map ***/
 			lyrEquip = layer.createSubLayer({ //agregando una nueva capa por codigo con metodo de carto
-				// sql:"SELECT * FROM inegi_equipaurbano", //propiedad sql el nombre del dataset
 				sql:"SELECT * FROM sector_policia", //propiedad sql el nombre del dataset
 				cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
 	  			interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar 
-	  			// interactivity: "cartodb_id,colonia" //campos con los cuales se va interactuar 
 			});
 
 		//se crea objeto para sql
@@ -56,7 +51,7 @@ $(function(){
 
         objsql.execute("select * from sectores")
                 .on("done",function(data){
-                    $("<option />",{"value":"*","text":'todos'}).appendTo("#sectores");
+                    $("<option />",{"value":"*","text":'Selecciona un sector...'}).appendTo("#sectores");
                     for(idx in data.rows){
                         $("<option />",{"value":data.rows[idx].nombre,"text":data.rows[idx].nombre}).appendTo("#sectores");
                     }
@@ -283,4 +278,12 @@ function search(sqlStr,response){
 	}).error(function(errors) {
 		console.log("errors:" + errors);
 	});
+}
+
+var callBack = function(layer){
+
+    maps._map.eachLayer(function(lyr){
+        lyr.redraw();
+    });
+
 }

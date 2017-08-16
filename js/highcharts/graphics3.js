@@ -10,29 +10,8 @@ $(document).ready(function() {
             plotShadow: false
         };
 
-        //Forma codigo Highcharts
-        // Highcharts.chart('container', {
-        //   chart: {
-        //       plotBackgroundColor: null,
-        //       plotBorderWidth: null,
-        //       plotShadow: false,
-        //       type: 'pie'
-        //   },
-        
-
-        //Forma 2
-        // chart = new Highcharts.Chart({
-        //     chart: {
-        //         renderTo: 'graficaCircular',
-        //         plotBackgroundColor: null,
-        //         plotBorderWidth: null,
-        //         plotShadow: false,
-        //         type: 'pie'
-        //     },
-        
-
         var title= {
-            text: 'Browser market shares. January, 2015 to May, 2015'
+            text: 'Alertas de Alto Impacto y Bajo Impacto'
         };
         var tooltip= {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -53,19 +32,21 @@ $(document).ready(function() {
         };
         var series = [{
                type: 'pie',
-               name: 'Browser share',
+               name: 'Alertas SSP',
                data: [
-                  ['Firefox',   45.0],
-                  ['IE',       26.8],
+                  ['Alto Impacto',   49.2],
+                  ['Bajo Impacto',   50.7],
+                  // ['Firefox',   45.0],
+                  /*['IE',       26.8],
                   {
                      name: 'Chrome',
                      y: 12.8,
                      sliced: true,
                      selected: true
-                  },
-                  ['Safari',    8.5],
-                  ['Opera',     6.2],
-                  ['Others',   0.7]
+                  },*/
+                  // ['Safari',    8.5],
+                  // ['Opera',     6.2],
+                  // ['Others',   0.7]
                ]
         }];
         // Radialize the colors

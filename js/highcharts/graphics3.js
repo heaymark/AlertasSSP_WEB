@@ -11,7 +11,7 @@ $(document).ready(function() {
         };
 
         var title= {
-            text: 'Alertas de Alto Impacto y Bajo Impacto'
+            text: 'Alertas Efectivas y No Efectivas'
         };
         var tooltip= {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -34,8 +34,8 @@ $(document).ready(function() {
                type: 'pie',
                name: 'Alertas SSP',
                data: [
-                  ['Alto Impacto',   49.2],
-                  ['Bajo Impacto',   50.7],
+                  ['Alertas Efectivas',   49.2],
+                  ['Alertas No Efectivas',   50.7],
                   // ['Firefox',   45.0],
                   /*['IE',       26.8],
                   {

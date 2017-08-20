@@ -8,18 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- dispositivos -->
 	<link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" /> <!-- icono de carto -->
 	<!-- <script src='js/cartodb.js'></script>	 -->
-	<script type="text/javascript" src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script>	
+	<link type="text/css" rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> 
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<script type="text/javascript" src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script><!-- libreria de carto -->
 	<script type="text/javascript" src="js/maps.js"></script>
-	<!-- <script src="main.js"></script> -->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 	<script type="text/javascript" src="js/controls.js"></script>
 	<script type="text/javascript" src="js/highcharts/highcharts_org.js"></script>
 	<script type="text/javascript" src="js/highcharts/exporting.js"></script>
 	<script type="text/javascript" src="js/highcharts/themes/sand-signika.js"></script>
 	<script type="text/javascript" src="js/highcharts/graphics3.js"></script>
-	<link type="text/css" rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> <!-- libreria de carto -->
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+
+	<link rel="stylesheet" href="css/leaflet.draw.css" />
+	<script type="text/javascript" src="js/leaflet/leaflet.draw-src.js"></script>
+
     <link type="text/css" rel="stylesheet" href="css/style.css">
 	<link type="text/css" rel="stylesheet" href="css/main.css">
+
 	<style type="text/css">
 		.layer_selector {
 			background: #fff;
@@ -83,172 +96,169 @@
  	<script type="css/cartodb" id="markerPoint">
     	#sector_policia [zoom >= 13]{
                marker-fill-opacity: 1;
-               opacity: 0.1;
+               // opacity: 0.1;
                marker-fill: #fff;
-               // marker-fill: #333333;
-               // marker-line-color: #229A00;
+               marker-fill: #333333;
+               marker-line-color: #229A00;
                marker-line-width: 1;
                marker-line-opacity: 1;
-               // marker-placement: point;
+               marker-placement: point;
                marker-type: ellipse;
                marker-width: 10;
                marker-allow-overlap: true;
 		}
 
-		#sector_policia[zoom >= 13][delegacion= "AZCAPOTZALCO"] {
-		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
-		   // marker-fill: #333333;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion= "AZCAPOTZALCO"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		    marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion= "XOCHIMILCO"] {
-		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/cemetery-18.svg");
-		   // marker-fill: #333333;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion= "XOCHIMILCO"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		    marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}   
-		#sector_policia[zoom >= 13][delegacion="GUSTAVO A. MADERO"] {
-		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
-		   // marker-fill: #B2DF8A;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="GUSTAVO A. MADERO"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		    marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="MAGDALENA CONTRERAS"] {
-		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/hospital-18.svg");
-		   // marker-fill: #B2DF8A;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="MAGDALENA CONTRERAS"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		    marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="IZTACALCO"] {
-		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/home84.svg");
-		   // marker-fill: #FF7F00;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="IZTACALCO"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		    marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="IZTAPALAPA"] {
-		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/maki-icons/rail-metro-18.svg");
-		  	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="IZTAPALAPA"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		  	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="MILPA ALTA"] {
-		   // marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/soccer1.svg");
-		   // marker-fill: #33A02C;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="MILPA ALTA"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		    marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="ALVARO OBREGON"] {
-		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building22.svg");
-		  	// marker-fill: #FB9A99;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="ALVARO OBREGON"] {
+		    marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		  	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="TLALPAN"] {
-		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/bag1.svg");
-		  	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="TLALPAN"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		  	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="BENITO JUAREZ"] {
-		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/building24.svg");
-		  	// marker-fill: #E31A1C;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="BENITO JUAREZ"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		  	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 13][delegacion="CUAUHTEMOC"] {
-		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/simpleicon/sailboat5.svg");
-		  	// marker-fill: #FDBF6F;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="CUAUHTEMOC"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		  	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 14][delegacion="VENUSTIANO CARRANZA"] {
-		   	// marker-file: url("http://com.cartodb.users-assets.production.s3.amazonaws.com/pin-maps/church1.svg");
-		 	// marker-fill: #FF4455;
+		#sector_policia[delegacion="VENUSTIANO CARRANZA"] {
+		   	marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #E31A1C;
 		 	marker-width: 25;
 		}
-		#sector_policia[zoom >= 14][delegacion="TLALPAN"] {
-		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
-		 	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="TLALPAN"] {
+			marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 14][delegacion="COYOACAN"] {
-		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/emergency-telephone-18.svg");
-		 	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="COYOACAN"] {
+			marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 14][delegacion="CUAJIMALPA"] {
-		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
-		 	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="CUAJIMALPA"] {
+			marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 14][delegacion="TLAHUAC"] {
-		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/industrial-18.svg");
-		 	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="TLAHUAC"] {
+			marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
-		#sector_policia[zoom >= 14][delegacion="MIGUEL HIDALGO"] {
-		// marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/danger-18.svg");
-		 	// marker-fill: #FF4455;
-		  	marker-width: 15;
-		  	marker-height : 15;
+		#sector_policia[delegacion="MIGUEL HIDALGO"] {
+			marker-file: url("https://s3.amazonaws.com/com.cartodb.users-assets.production/maki-icons/police-18.svg");
+		 	marker-fill: #E31A1C;
+		  	marker-width: 25;
 		}
 	</script>
 	<script type="css/cartodb" id="markerManzana">
-		#colonias_ok[zoom >= 12] {
+		#colonias_ok_1 {
 		   polygon-opacity: 0.5;
 		   line-color: #FFF;
 		   line-width: 1;
 		   line-opacity: 0.5;
 		}
 
-		#colonias_ok[zoom >= 12][nombre_id=10] {
-		   // polygon-fill: #A6CEE3;
+		#colonias_ok_1[nombre_id=10] {
+		   polygon-fill: #A6CEE3;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=20] {
-		   // polygon-fill: #1F78B4;
+		#colonias_ok_1[nombre_id>=20] {
+		   polygon-fill: #1F78B4;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=30] {
-		   // polygon-fill: #B2DF8A;
+		#colonias_ok_1[nombre_id>=30] {
+		   polygon-fill: #B2DF8A;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=80] {
-		   // polygon-fill: #33A02C;
+		#colonias_ok_1[nombre_id>=80] {
+		   polygon-fill: #33A02C;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=40] {
-		   // polygon-fill: #FB9A99;
+		#colonias_ok_1[nombre_id>=40] {
+		   polygon-fill: #FB9A99;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=70] {
-			// polygon-fill: #E31A1C;
+		#colonias_ok_1[nombre_id>=70] {
+			polygon-fill: #E31A1C;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=60] {
-		   // polygon-fill: #FDBF6F;
+		#colonias_ok_1[nombre_id>=60] {
+		   polygon-fill: #FDBF6F;
 		}
-		#colonias_ok[zoom >= 12][nombre_id>=50] {
-		   // polygon-fill: #FF7F00;
+		#colonias_ok_1[nombre_id>=50] {
+		   polygon-fill: #FF7F00;
 		}
-	</script>	
+	</script>
+    <script type="infowindow/html" id="infowindow_template">
+      <div class="cartodb-popup">
+        <a href="#close" class="cartodb-popup-close-button close">x</a>
+        <div class="cartodb-popup-content-wrapper">
+          <div class="cartodb-popup-content">
+            <h4>This is...</h4>
+            <p>{{content.data.name}}</p>
+            <h4>It has a population of<h4>
+            <p>{{content.data.pop_max}}</p>              
+          </div>
+        </div>
+        <div class="cartodb-popup-tip-container"></div>
+      </div>
+    </script>
 </head>
 <body>
     <div class="full-width full-width-extra">
 		<h1 id="cabezera">
 			<span class="cabezera_">
 	      		<a href="https://sig.cdmx.gob.mx">
-	        		<img id="logo" src="img/MX_logo_GISCDMX_Smon-cab.svg" alt="Tu CDMX">
+	        		<img id="logo" src="css/images/MX_logo_GISCDMX_Smon-cab.svg" alt="Tu CDMX">
 	      		</a>
       		</span>
 	      	<span class="cabezera3">
 		      	<a href="#">
-		      		<img src="img/MX_logo_CDMX_blanco2.svg" id="cdmx">
+		      		<img src="css/images/MX_logo_CDMX_blanco2.svg" id="cdmx">
 		    	</a>
 	    	</span>
       	</h1>
     </div>
     <br>
 	<div class="container-fluid">
-	    <!-- <div class="container"> -->
 	        <div class="row">
 				<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 columna">
 	          		<form role="form" action="">
@@ -269,21 +279,36 @@
 						<div class="form-group">
 							<p class="form-control-static">Tipos de alertas:</p><br>
 							<label class="radio-inline">
-							  <input type="radio" name="alerta" id="aai" value="alertaaltoimpacto"> Alertas de alto impacto
+							  <input type="radio" name="alerta" id="aai" value="alertaaltoimpacto"> Alertas Efectivas
 							</label>
 							<label class="radio-inline">
-							  <input type="radio" name="alerta" id="abi" value="alertabajoimpacto"> Alertas de bajo impacto
+							  <input type="radio" name="alerta" id="abi" value="alertabajoimpacto"> Alertas No Efectivas
 							</label>
 						</div>
 	          		</form>
 	          		<br>
-	          		<P>Aqui va la grafica</P>
+	          		<P>Grafica de Alertas</P>
 					<div id="graficaCircular" style="width: 100%; height: 100%; margin: 0 auto"></div>
 	        	</div>
 	          	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 columna">
 	          		<div id="maps" style="height: 750px;"></div>
-						<!-- <label>Detalle de alertas</label>
-	            		<table class="table">
+				</div>
+	        </div>
+	</div>
+	<button class="btn btn-default" data-toggle="modal" data-target="#miModal">Crear nueva</button>
+	<a data-toggle="modal" href="#miModal" class="btn btn-primary btn-large">Abrir ventana modal</a>
+	<!-- Modals -->
+	<div class="modal fade bs-example-modal-lg" id="miModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Detalle de alertas</h4>
+				</div>
+				<div class="modal-body">
+	            		<table class="table table-hover">
 							<thead>
 								<tr>
 									<td>Asociacion</td>
@@ -294,12 +319,19 @@
 								</tr>
 							</thead>
 							<tbody id="tbldetalle"></tbody>
-						</table> -->
+						</table>
 				</div>
-	        </div>
-	    <!-- </div>   -->
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+				</div>
+			</div>
+		</div>
 	</div>
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/events.js"></script>
+    <!-- <script type="text/javascript" src="js/leaflet/leaflet.draw-src.js"></script> -->
+	<!-- <script type="text/javascript" src="js/cdmxCarto.js"></script> -->
+
 </body>
 </html>

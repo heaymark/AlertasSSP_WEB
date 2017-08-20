@@ -4,7 +4,6 @@ function cmb(evt){
 
     // alert(evt.target.value);
     // alert(evt.target.id);
-        // $("#aai").attr('checked', true);
  
     switch(evt.target.value){
         case "alertaaltoimpacto":

@@ -7,29 +7,32 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- compativilidad -->
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- dispositivos -->
 	<link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" /> <!-- icono de carto -->
-	<!-- <script src='js/cartodb.js'></script>	 -->
-	<link type="text/css" rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" /> 
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<script type="text/javascript" src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script><!-- libreria de carto -->
+	
+	<!-- Carto-->
+	<!-- <link type="text/css" rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />  -->
+	<link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+	<!-- <script type="text/javascript" src='http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js'></script> --><!-- libreria de carto -->
+	<script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
 	<script type="text/javascript" src="js/maps.js"></script>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<!-- Bootstrap -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- Jquery -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"><!-- Optional theme -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript -->
 
-	<script type="text/javascript" src="js/controls.js"></script>
+	<!-- Highcharts -->
 	<script type="text/javascript" src="js/highcharts/highcharts_org.js"></script>
 	<script type="text/javascript" src="js/highcharts/exporting.js"></script>
 	<script type="text/javascript" src="js/highcharts/themes/sand-signika.js"></script>
 	<script type="text/javascript" src="js/highcharts/graphics3.js"></script>
 
+	<!-- Leaflet -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/leaflet.draw.css" />
 	<script type="text/javascript" src="js/leaflet/leaflet.draw-src.js"></script>
 
+	<!-- Propias -->
     <link type="text/css" rel="stylesheet" href="css/style.css">
 	<link type="text/css" rel="stylesheet" href="css/main.css">
 
@@ -93,6 +96,8 @@
 			pointer-events : none;
 		}
 	</style>
+
+	<!-- Capa Sectores deshabilitada en builder agregada en codigo -->
  	<script type="css/cartodb" id="markerPoint">
     	#sector_policia [zoom >= 13]{
                marker-fill-opacity: 1;
@@ -194,55 +199,75 @@
 		  	marker-width: 25;
 		}
 	</script>
-	<script type="css/cartodb" id="markerManzana">
-		#colonias_ok_1 {
+	<!-- Capa de colonias Coment en codigo -->
+	<!-- <script type="css/cartodb" id="markerManzana">
+		#colonias_ok {
 		   polygon-opacity: 0.5;
 		   line-color: #FFF;
 		   line-width: 1;
 		   line-opacity: 0.5;
 		}
 
-		#colonias_ok_1[nombre_id=10] {
+		#colonias_ok[nombre_id=10] {
 		   polygon-fill: #A6CEE3;
 		}
-		#colonias_ok_1[nombre_id>=20] {
+		#colonias_ok[nombre_id>=20] {
 		   polygon-fill: #1F78B4;
 		}
-		#colonias_ok_1[nombre_id>=30] {
+		#colonias_ok[nombre_id>=30] {
 		   polygon-fill: #B2DF8A;
 		}
-		#colonias_ok_1[nombre_id>=80] {
+		#colonias_ok[nombre_id>=80] {
 		   polygon-fill: #33A02C;
 		}
-		#colonias_ok_1[nombre_id>=40] {
+		#colonias_ok[nombre_id>=40] {
 		   polygon-fill: #FB9A99;
 		}
-		#colonias_ok_1[nombre_id>=70] {
+		#colonias_ok[nombre_id>=70] {
 			polygon-fill: #E31A1C;
 		}
-		#colonias_ok_1[nombre_id>=60] {
-		   polygon-fill: #FDBF6F;
+		#colonias_ok[nombre_id>=60] {
+		   polygon-fill: #6F7CFD;
 		}
-		#colonias_ok_1[nombre_id>=50] {
-		   polygon-fill: #FF7F00;
+		#colonias_ok[nombre_id>=50] {
+		   polygon-fill: #0CB127;
 		}
+	</script> -->
+	<script type="infowindow/html" id="infowindow_template_no_efectiva">
+		<div class="cartodb-popup v2">
+			<a href="#close" class="cartodb-popup-close-button close">x</a>
+				<div class="cartodb-popup-content-wrapper">
+					<div class="cartodb-popup-content">
+		      			<h4>ID</h4>
+		      			<p>{{cartodb_id}}</p>
+		      			<h4>Asociación</h4>
+		      			<p>{{asociacion}}</p>
+		      			<h4>Cadena</h4>
+		      			<p>{{cadena}}</p>
+		    		</div>
+		  		</div>
+		  	<div class="cartodb-popup-tip-container"></div>
+		</div>
 	</script>
-    <script type="infowindow/html" id="infowindow_template">
-      <div class="cartodb-popup">
-        <a href="#close" class="cartodb-popup-close-button close">x</a>
-        <div class="cartodb-popup-content-wrapper">
-          <div class="cartodb-popup-content">
-            <h4>This is...</h4>
-            <p>{{content.data.name}}</p>
-            <h4>It has a population of<h4>
-            <p>{{content.data.pop_max}}</p>              
-          </div>
-        </div>
-        <div class="cartodb-popup-tip-container"></div>
-      </div>
-    </script>
+	<script type="infowindow/html" id="infowindow_template_efectiva">
+		<div class="cartodb-popup v2">
+			<a href="#close" class="cartodb-popup-close-button close">x</a>
+				<div class="cartodb-popup-content-wrapper">
+					<div class="cartodb-popup-content">
+		      			<h4>ID</h4>
+		      			<p>{{cartodb_id}}</p>
+		      			<h4>Detalles</h4>
+		      			<p>{{detalleopc}}</p>
+		      			<h4>Detenidos</h4>
+		      			<p>{{detenidos}}</p>
+		    		</div>
+		  		</div>
+		  	<div class="cartodb-popup-tip-container"></div>
+		</div>
+	</script>
 </head>
 <body>
+	<!-- Cabezera -->
     <div class="full-width full-width-extra">
 		<h1 id="cabezera">
 			<span class="cabezera_">
@@ -258,6 +283,7 @@
       	</h1>
     </div>
     <br>
+    <!-- Contenido -->
 	<div class="container-fluid">
 	        <div class="row">
 				<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 columna">
@@ -295,9 +321,9 @@
 				</div>
 	        </div>
 	</div>
-	<button class="btn btn-default" data-toggle="modal" data-target="#miModal">Crear nueva</button>
-	<a data-toggle="modal" href="#miModal" class="btn btn-primary btn-large">Abrir ventana modal</a>
+	
 	<!-- Modals -->
+	<!-- <button class="btn btn-default" data-toggle="modal" data-target="#miModal">Crear nueva</button> <a data-toggle="modal" href="#miModal" class="btn btn-primary btn-large">Abrir ventana modal</a>-->
 	<div class="modal fade bs-example-modal-lg" id="miModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
@@ -328,10 +354,11 @@
 			</div>
 		</div>
 	</div>
+
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/events.js"></script>
-    <!-- <script type="text/javascript" src="js/leaflet/leaflet.draw-src.js"></script> -->
 	<!-- <script type="text/javascript" src="js/cdmxCarto.js"></script> -->
+	<!-- <script type="text/javascript" src="js/controls.js"></script> -->
 
 </body>
 </html>

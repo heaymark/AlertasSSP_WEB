@@ -7,14 +7,18 @@ function cmb(evt){
  
     switch(evt.target.value){
         case "alertaaltoimpacto":
-            lyrs.getSubLayer(7).show();
-            lyrs.getSubLayer(6).hide();
+            lyrs.getSubLayer(8).show();
+            lyrs.getSubLayer(7).hide();
             // evt.target.id.attr('checked', true);
             break;
         case "alertabajoimpacto":
-            lyrs.getSubLayer(6).show();
-            lyrs.getSubLayer(7).hide();
+            lyrs.getSubLayer(7).show();
+            lyrs.getSubLayer(8).hide();
             break;
     }
 }
 
+function vmt(evt){
+
+    $('#myModal').modal('show');
+}

@@ -5,6 +5,7 @@ var mkrInicial;
 var lyrRadio;
 var maps;
 var objlayerBase;
+// var sublayer;
 //Se  obtiene de viz en carto
 var layerbase = 'https://{s}.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24';
 var paramlayerbase = {
@@ -23,10 +24,11 @@ var parammapbase = {
 }
 var mapdiv =  'maps';
 
-var paramusers = {
+var param = {
     user:"develop",
 };
 var viz = "https://finanzasdf.carto.com/u/develop/api/v2/viz/6fe02154-7fef-470b-8ef2-8463e076c672/viz.json";
+		// https://finanzasdf.carto.com/u/develop/api/v2/viz/6fe02154-7fef-470b-8ef2-8463e076c672/viz.json
 
 $(function(){
 
@@ -37,27 +39,54 @@ $(function(){
 		.on('done', function(layer){//evento que se dispara cuando kla peticion a carto
 			lyrs = layer;
 
-			/*** Agregar una capa al map ***/
-			lyrEquip = layer.createSubLayer({ //agregando una nueva capa por codigo con metodo de carto
-				sql:"SELECT * FROM sector_policia_1", //propiedad sql el nombre del dataset
-				cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
-	  			interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar 
-			});//Fin lyrEquip = layer.createSubLayer({
+			/*** Agregar la capa como extra de las que estan en el builder sin importar si esta duplicada / Se agrega al final del JSON ***/
+			// lyrEquip = layer.createSubLayer({ //agregando una nueva capa por codigo con metodo de carto
+			// 	sql:"SELECT * FROM sector_policia", //propiedad sql el nombre del dataset
+			// 	cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
+	  // 			interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar incluidos en el objeto de la capa
+			// }); //Fin lyrEquip = layer.createSubLayer({
+
+			/*** Cuenta todas las capas habilitadas o no ***/
+			/*** Agregar capa de infowindows ***/
+			layer.getSubLayer(7).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
+			layer.getSubLayer(7).setInteractivity(['cartodb_id','asociacion','cadena', 'detalleopc', 'detenidos']);// se  ponen los campos con los cuales se va a jugar o trabjar
+			layer.getSubLayer(7).setSQL("SELECT * FROM develop.alertas_alto_bajo_impacto WHERE alerta_alto_bajo_i = 0");//consulta para poder ver poligono pintado
+			// layer.getSubLayer(7).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
+	    			//selectFeature("develop.alertas_alto_bajo_impacto","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
+			// });
+
+		    cartodb.vis.Vis.addInfowindow(maps, layer.getSubLayer(7), ['cartodb_id', 'asociacion', 'cadena', 'detalleopc', 'detenidos'],{
+		    	infowindowTemplate: $('#infowindow_template_no_efectiva').html(),//Se obtiene codigo html
+		    	templateType:'mustache'//tipo de generador de template (undercode, mustache)
+		    });
+
+			/*** Agregar capa de infowindows ***/
+			layer.getSubLayer(8).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
+			layer.getSubLayer(8).setInteractivity(['cartodb_id', 'detalleopc', 'detenidos']);// se  ponen los campos con los cuales se va a jugar o trabjar
+			// layer.getSubLayer(7).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
+	    			//selectFeature("develop.alertas_alto_bajo_impacto","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
+			// });
+
+		    cartodb.vis.Vis.addInfowindow(maps, layer.getSubLayer(8), ['cartodb_id', 'detalleopc', 'detenidos'],{
+		    	infowindowTemplate: $('#infowindow_template_efectiva').html(),//Se obtiene codigo html
+		    	templateType:'mustache'//tipo de generador de template (undercode, mustache)
+		    });
 
 
-			/*** Agregar eventos sobre la capa y hacer cambios sobre una capa***/
-			layer.getSubLayer(1).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
-			layer.getSubLayer(1).setInteractivity(['cartodb_id','nombre_id']);// se  ponen los campos con los cuales se va a jugar o trabjar
-			layer.getSubLayer(1).setCartoCSS($("#markerManzana").text());//Aqui se cambia el cartocss que tiene la capa por default y se va ubicar el css que se ocupara se encuentra en index
-			layer.getSubLayer(1).setSQL("SELECT * FROM colonias_ok_1 ORDER BY nombre_id ASC");//consulta para poder ver poligono pintado
-			layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
-	  			selectFeature("colonias_ok","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
-			});//Fin layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){
-		//});//Fin .on('done', function(layer){
+
+		    /*** (Solo funciona si la capa esta habilitada en builder) ***/
+			/*** Agregar eventos sobre la capa y hacer cambios sobre una capa ***/
+			// layer.getSubLayer(1).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
+			// layer.getSubLayer(1).setInteractivity(['cartodb_id','nombre_id']);// se  ponen los campos con los cuales se va a jugar o trabjar
+			// layer.getSubLayer(1).setCartoCSS($("#markerManzana").text());//Aqui se cambia el cartocss que tiene la capa por default y se va ubicar el css que se ocupara se encuentra en index
+			// layer.getSubLayer(1).setSQL("SELECT * FROM colonias_ok ORDER BY nombre_id ASC");//consulta para poder ver poligono pintado
+			// layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
+	  			// selectFeature("colonias_ok","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
+			// });//Fin layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){
 		
 			btnTools.addTo(maps);//botones que se agrean al mapa
 			// btnBaseMap.addTo(maps);//botonesde mapa base que se agrean al mapa
-			$(".cartodb-logo").off( "click", "a");
+			// $(".cartodb-logo").on( "click", "a");
 		}).error(function (err) {
 			console.log(err);
 		});
@@ -93,10 +122,13 @@ $(function(){
 				});//Fin .on("done",function(data){
 
 				if (optionSectores == "*"){
-					lyrs.getSubLayer(2).setSQL("select alert.* from alertas_efectivas alert");
+					 lyrs.getSubLayer(7).setSQL("select alert.* from develop.alertas_alto_bajo_impacto alert");
+					
 				}else{//Fin if (optionSectores == "*"){
-					lyrs.getSubLayer(2).setSQL("select alert.* from alertas_efectivas alert inner join sectores sec on ST_Contains(sec.the_geom,alert.the_geom) where sec.nombre = '"+optionSectores+"'");
-					objsql.execute("SELECT alert.* FROM alertas_efectivas alert inner join sectores sec on ST_Contains(sec.the_geom,alert.the_geom) where sec.nombre = '"+optionSectores+"'")
+					 lyrs.getSubLayer(7).setSQL("select alert.* from develop.alertas_alto_bajo_impacto alert inner join sectores sec on ST_Contains(sec.the_geom,alert.the_geom) where sec.nombre = '"+optionSectores+"'");
+					
+					 objsql.execute("SELECT alert.* FROM alertas_efectivas alert inner join sectores sec on ST_Contains(sec.the_geom,alert.the_geom) where sec.nombre = '"+optionSectores+"'")
+					
 					.on("done",function(data){
 						$("#tbldetalle").html('');
 						for(idx in data.rows){
@@ -113,7 +145,7 @@ $(function(){
 				}//Fin else
 
 				bounry({
-	    			paramusers:"develop",
+	    			user:"develop",
 						},"sectores","nombre = '"+optionSectores+"'",'',maps);
 					maps.setZoom(14);
 		});//Fin sector
@@ -125,25 +157,25 @@ $(function(){
 					user:"develop",
 				});//Fin objsql = new cartodb.SQL({
 
-			objsql.execute("SELECT alert.* FROM alertas_efectivas alert inner join cuadrantes sec on ST_Contains(sec.the_geom,alert.the_geom) where sec.no_cuadran = '"+optionCuadrante+"'")
-				.on("done",function(data){
-					$("#tbldetalle").html('');
-					for(idx in data.rows){
-						$tr = $("<tr>");
-						$("<td />",{"text":data.rows[idx].asociacion }).appendTo($tr);
-						$("<td />",{"text":data.rows[idx].cadena }).appendTo($tr);
-						$("<td />",{"text":data.rows[idx].detalleopcional }).appendTo($tr);
-						$("<td />",{"text":data.rows[idx].nombre }).appendTo($tr);
-						$("<td />",{"text":data.rows[idx].segundos }).appendTo($tr);
-						
-						$tr.appendTo("#tbldetalle");
-					}//Fin for(idx in data.rows){
-				});//Fin .on("done",function(data){
-		
-			bounry({
-				paramuser:"develop",
-					},"cuadrantes",	"sector = '"+$("#sectores").val()+"' and no_cuadran = '"+optionCuadrante+"'",'',maps);
-				maps.setZoom(14);
+				objsql.execute("SELECT alert.* FROM alertas_efectivas alert inner join cuadrantes sec on ST_Contains(sec.the_geom,alert.the_geom) where sec.no_cuadran = '"+optionCuadrante+"'")
+					.on("done",function(data){
+						$("#tbldetalle").html('');
+						for(idx in data.rows){
+							$tr = $("<tr>");
+							$("<td />",{"text":data.rows[idx].asociacion }).appendTo($tr);
+							$("<td />",{"text":data.rows[idx].cadena }).appendTo($tr);
+							$("<td />",{"text":data.rows[idx].detalleopcional }).appendTo($tr);
+							$("<td />",{"text":data.rows[idx].nombre }).appendTo($tr);
+							$("<td />",{"text":data.rows[idx].segundos }).appendTo($tr);
+							
+							$tr.appendTo("#tbldetalle");
+						}//Fin for(idx in data.rows){
+					});//Fin .on("done",function(data){
+			
+				bounry({
+					user:"develop",
+						},"cuadrantes",	"sector = '"+$("#sectores").val()+"' and no_cuadran = '"+optionCuadrante+"'",'',maps);
+					maps.setZoom(14);
 		});//Fin cuadrante
 
 		callbackLeftlet(lyrs);
@@ -151,8 +183,8 @@ $(function(){
 });
 
 //Funcion para acercar al mapa 
-function bounry(paramusers,table,sqlfilter,layer,map) {
-	var sqlExtent = new cartodb.SQL(paramusers);
+function bounry(user,table,sqlfilter,layer,map) {
+	var sqlExtent = new cartodb.SQL(user);
     //regresa la coordenada maxima de mi extend de la geometria
 	var sql = "select max(xmax) as xmax,min(xmin) as xmin,max(ymax) as ymax,min(ymin) as ymin from (select ST_Xmax(ST_Extent(the_geom)) as xmax,ST_Xmin(ST_Extent(the_geom)) as xmin,ST_Ymax(ST_Extent(the_geom)) as ymax,ST_Ymin(ST_Extent(the_geom)) as ymin from " + table + " where " + sqlfilter + ") as ext"
 
@@ -197,7 +229,7 @@ function selectFeature(table,sqlfilter){
 }
 
 
-//Leaflet
+//Leaflet botones de radios
 // callbackLeftlet = function(layer){
 function callbackLeftlet(layer){
     lyrLeft = layer;
@@ -282,16 +314,18 @@ function fn_datainfo(geom, radius) {
 	});
 }
 
-// objMapLeft  =  new cdmxCarto(layerbase,viz,'maps',paramusers,paramlayerbase,parammapbase);
+// objMapLeft  =  new cdmxCarto(layerbase,viz,'maps',param,paramlayerbase,parammapbase);
 // objMapLeft.renderMap(callbackLeftlet);
-// 
-// Boton
-// var btnBaseMap = L.control({position: 'bottomright'});
+
+
+// Botono en el mapa para la tabla en el modal
 var btnTools = L.control({position: 'topleft'});
 
 btnTools.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'leaflet-bar'); // create a div with a class "info"
-    this._filtro = L.DomUtil.create('a','',this._div);
+    this._div.setAttribute("id","miiddiv");
+    this._filtro = L.DomUtil.create('a','claslinksa',this._div);
+    this._filtro.setAttribute("id","amiid");
 
     this._imgfiltro = L.DomUtil.create('i','',this._filtro);
     this._imgfiltro.setAttribute("class","fa fa-search");
@@ -303,5 +337,7 @@ btnTools.onAdd = function (map) {
 };
 
 btnTools.fnFilter = function () {
-    $("#miModal").toggle();
+    $('#miModal').modal('show'); 
 };
+
+

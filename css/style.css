@@ -15,26 +15,51 @@
 	height: 70px;
 }
 
-h1,#cabezera_{
-/*h1,.cabezera,span,#cabezera_,a{*/
-	position: absolute;
-  	top: -4px; 
-  	left: 60px;
-  	
-}
-
-.cdmx{
-/*#cabezera3{*/
-	position: absolute;
-  	top: -4px; 
-  	right: 20px
-}
-
-
 #maps{
     float: left;
     width: 48%;
     height: 40%;
     padding: 0px;
     margin: 0px;
+}
+
+.footer-bottom {
+    position: absolute;
+    bottom: 0;
+    background-color: #27272e;
+    padding-left: 6px;
+    height: 24px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.copyright {
+    color: #fff;
+    float: left;
+    font-size: 12px;
+    opacity: .8;
+    line-height: 24px;
+}
+
+.titulovisor{
+	font-weight: 300;
+	font-family: 'Open Sans',sans-serif;
+	font-size: 16px;
+	color: #fff;
+	line-height: 24px;
+}
+
+.tipovisor{
+	font-weight: 700;
+	font-size: .75em;
+	line-height: 1.75em;
+	color: rgba(255,255,255,.5);
+
+}
+
+#logouser{
+	display: block;
+	font-size: .75em;
+	color: #fff;
+	align-content: center;
 }

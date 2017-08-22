@@ -96,9 +96,8 @@
 			pointer-events : none;
 		}
 	</style>
-
-	<!-- Capa Sectores deshabilitada en builder agregada en codigo -->
- 	<script type="css/cartodb" id="markerPoint">
+	<!-- Capa Sectores agregada por codigo -->
+ 	<!-- <script type="css/cartodb" id="markerPoint">
     	#sector_policia [zoom >= 13]{
                marker-fill-opacity: 1;
                // opacity: 0.1;
@@ -198,8 +197,8 @@
 		 	marker-fill: #E31A1C;
 		  	marker-width: 25;
 		}
-	</script>
-	<!-- Capa de colonias Coment en codigo -->
+	</script> -->
+	<!-- Capa Colonias Coment en codigo -->
 	<!-- <script type="css/cartodb" id="markerManzana">
 		#colonias_ok {
 		   polygon-opacity: 0.5;
@@ -233,6 +232,7 @@
 		   polygon-fill: #0CB127;
 		}
 	</script> -->
+	<!-- Infowindows -->
 	<script type="infowindow/html" id="infowindow_template_no_efectiva">
 		<div class="cartodb-popup v2">
 			<a href="#close" class="cartodb-popup-close-button close">x</a>
@@ -269,18 +269,43 @@
 <body>
 	<!-- Cabezera -->
     <div class="full-width full-width-extra">
-		<h1 id="cabezera">
-			<span class="cabezera_">
-	      		<a href="https://sig.cdmx.gob.mx">
-	        		<img id="logo" src="css/images/MX_logo_GISCDMX_Smon-cab.svg" alt="Tu CDMX">
-	      		</a>
-      		</span>
-	      	<span class="cabezera3">
-		      	<a href="#">
-		      		<img src="css/images/MX_logo_CDMX_blanco2.svg" id="cdmx">
-		    	</a>
-	    	</span>
-      	</h1>
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 columna">
+				<span class="cabezera_">
+					<a href="https://sig.cdmx.gob.mx">
+						<!-- <img id="logo" src="css/images/MX_logo_GISCDMX_Smon-cab.svg" alt="Tu CDMX"> -->
+					</a>
+				</span>
+				<a href="#" id="ctrl_layerpanel" class="on" title="<lang>Panel de capas</lang>"></a>
+			</div>
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 columna">
+					<span class="cabezera_">
+						<a href="https://sig.cdmx.gob.mx">
+							<img id="logo" src="css/images/MX_logo_GISCDMX_Smon-cab.svg" alt="Tu CDMX">
+						</a>
+					</span>
+			</div>
+			<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 columna">
+		      		<p class="tipovisor">VISOR</p>
+		      		<p class="titulovisor">
+		      		Alerta de Establecimientos SSP
+		      			<a class="visorToggler" href="#">
+		      				<img id="desplegue" src="css/images/MX_ico_desplevi_blanco.svg">
+		      			</a>
+		      		</p>
+			</div>
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 columna">
+				<a href="#" class="ctrl_user on">
+		          <img id="logouser" src="css/images/MX_ico_cab_user.svg">
+		          <strong id="logouser">Maro </strong>
+		        </a>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 columna">
+		      	<span class="cabezera3">
+			      	<a href="#">
+			      		<img src="css/images/MX_logo_CDMX_blanco2.svg" id="cdmx">
+			    	</a>
+		    	</span>
+			</div>
     </div>
     <br>
     <!-- Contenido -->
@@ -320,8 +345,20 @@
 	          		<div id="maps" style="height: 750px;"></div>
 				</div>
 	        </div>
+	</div>	
+
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="copyright">
+						SIG-CDMX @ 2017 Gobierno de CDMX
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
 	<!-- Modals -->
 	<!-- <button class="btn btn-default" data-toggle="modal" data-target="#miModal">Crear nueva</button> <a data-toggle="modal" href="#miModal" class="btn btn-primary btn-large">Abrir ventana modal</a>-->
 	<div class="modal fade bs-example-modal-lg" id="miModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

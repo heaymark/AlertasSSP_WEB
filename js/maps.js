@@ -41,12 +41,12 @@ $(function(){
 
 			/*** Agregar la capa como extra de las que estan en el builder sin importar si esta duplicada / Se agrega al final del JSON ***/
 			// lyrEquip = layer.createSubLayer({ //agregando una nueva capa por codigo con metodo de carto
-			// 	sql:"SELECT * FROM sector_policia", //propiedad sql el nombre del dataset
-			// 	cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
-	  // 			interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar incluidos en el objeto de la capa
+			//  	sql:"SELECT * FROM sector_policia", //propiedad sql el nombre del dataset
+			//  	cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
+	    			//interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar incluidos en el objeto de la capa
 			// }); //Fin lyrEquip = layer.createSubLayer({
 
-			/*** Cuenta todas las capas habilitadas o no ***/
+			/*** Cuenta todas las capas habilitadas ***/
 			/*** Agregar capa de infowindows ***/
 			layer.getSubLayer(7).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
 			layer.getSubLayer(7).setInteractivity(['cartodb_id','asociacion','cadena', 'detalleopc', 'detenidos']);// se  ponen los campos con los cuales se va a jugar o trabjar
@@ -63,7 +63,7 @@ $(function(){
 			/*** Agregar capa de infowindows ***/
 			layer.getSubLayer(8).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
 			layer.getSubLayer(8).setInteractivity(['cartodb_id', 'detalleopc', 'detenidos']);// se  ponen los campos con los cuales se va a jugar o trabjar
-			// layer.getSubLayer(7).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
+			// layer.getSubLayer(8).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
 	    			//selectFeature("develop.alertas_alto_bajo_impacto","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
 			// });
 
@@ -71,8 +71,6 @@ $(function(){
 		    	infowindowTemplate: $('#infowindow_template_efectiva').html(),//Se obtiene codigo html
 		    	templateType:'mustache'//tipo de generador de template (undercode, mustache)
 		    });
-
-
 
 		    /*** (Solo funciona si la capa esta habilitada en builder) ***/
 			/*** Agregar eventos sobre la capa y hacer cambios sobre una capa ***/
@@ -237,8 +235,8 @@ function callbackLeftlet(layer){
     var drawControl = new L.Control.Draw({
         position : 'topleft',
         draw : {
-        	polyline : false,
-        	polygon : true,
+        	polyline : true,
+        	polygon : false,
         	rectangle : true,
         	marker : false,
         	circle: true
@@ -328,7 +326,7 @@ btnTools.onAdd = function (map) {
     this._filtro.setAttribute("id","amiid");
 
     this._imgfiltro = L.DomUtil.create('i','',this._filtro);
-    this._imgfiltro.setAttribute("class","fa fa-search");
+    this._imgfiltro.setAttribute("class","fa fa-info-circle");
     this._imgfiltro.setAttribute("aria-hidden",true);
     this._imgfiltro.setAttribute("style","margin:6px 8px;");
 

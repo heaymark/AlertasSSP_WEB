@@ -1,11 +1,4 @@
-var cartolayer;
-var sltfeature;
-var lyrs;
-var mkrInicial;
-var lyrRadio;
-var maps;
-var objlayerBase;
-// var sublayer;
+var cartolayer, sltfeature, lyrs, mkrInicial, lyrRadio, maps, objlayerBase, highlight, dehighlight, select, layerbase, paramlayerbase, parammapbase, viz, vizparam, el, layers, user, api_key;
 //Se  obtiene de viz en carto
 var layerbase = 'https://{s}.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24';
 var paramlayerbase = {
@@ -28,7 +21,6 @@ var param = {
     user:"develop",
 };
 var viz = "https://finanzasdf.carto.com/u/develop/api/v2/viz/6fe02154-7fef-470b-8ef2-8463e076c672/viz.json";
-		// https://finanzasdf.carto.com/u/develop/api/v2/viz/6fe02154-7fef-470b-8ef2-8463e076c672/viz.json
 
 $(function(){
 
@@ -40,17 +32,17 @@ $(function(){
 			lyrs = layer;
 
 			/*** Agregar la capa como extra de las que estan en el builder sin importar si esta duplicada / Se agrega al final del JSON ***/
-			// lyrEquip = layer.createSubLayer({ //agregando una nueva capa por codigo con metodo de carto
-			//  	sql:"SELECT * FROM sector_policia", //propiedad sql el nombre del dataset
-			//  	cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
-	    			//interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar incluidos en el objeto de la capa
-			// }); //Fin lyrEquip = layer.createSubLayer({
+			/*lyrEquip = layer.createSubLayer({ //agregando una nueva capa por codigo con metodo de carto
+			  	sql:"SELECT * FROM sector_policia", //propiedad sql el nombre del dataset
+			  	cartocss: $("#markerPoint").text(), //se jala del index donde se pone el cartocss que se optiende del editor de carto  (diseñado para puntos)
+	    			interactivity: "cartodb_id,delegacion" //campos con los cuales se va interactuar incluidos en el objeto de la capa
+			}); //Fin lyrEquip = layer.createSubLayer({*/
 
 			/*** Cuenta todas las capas habilitadas ***/
 			/*** Agregar capa de infowindows ***/
 			layer.getSubLayer(7).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
 			layer.getSubLayer(7).setInteractivity(['cartodb_id','asociacion','cadena', 'detalleopc', 'detenidos']);// se  ponen los campos con los cuales se va a jugar o trabjar
-			layer.getSubLayer(7).setSQL("SELECT * FROM develop.alertas_alto_bajo_impacto WHERE alerta_alto_bajo_i = 0");//consulta para poder ver poligono pintado
+			// layer.getSubLayer(7).setSQL("SELECT * FROM develop.alertas_alto_bajo_impacto WHERE alerta_alto_bajo_i = 0");//consulta para poder ver poligono pintado
 			// layer.getSubLayer(7).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
 	    			//selectFeature("develop.alertas_alto_bajo_impacto","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
 			// });
@@ -74,17 +66,15 @@ $(function(){
 
 		    /*** (Solo funciona si la capa esta habilitada en builder) ***/
 			/*** Agregar eventos sobre la capa y hacer cambios sobre una capa ***/
-			// layer.getSubLayer(1).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
-			// layer.getSubLayer(1).setInteractivity(['cartodb_id','nombre_id']);// se  ponen los campos con los cuales se va a jugar o trabjar
-			// layer.getSubLayer(1).setCartoCSS($("#markerManzana").text());//Aqui se cambia el cartocss que tiene la capa por default y se va ubicar el css que se ocupara se encuentra en index
-			// layer.getSubLayer(1).setSQL("SELECT * FROM colonias_ok ORDER BY nombre_id ASC");//consulta para poder ver poligono pintado
-			// layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
-	  			// selectFeature("colonias_ok","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
-			// });//Fin layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){
+			/* layer.getSubLayer(1).setInteraction(true); //en layer estan todas las capas, getsub se refiera a una capa en especifico empezando de 0 hacia arriva dedes un metod de carto
+			 layer.getSubLayer(1).setInteractivity(['cartodb_id','nombre_id']);// se  ponen los campos con los cuales se va a jugar o trabjar
+			 layer.getSubLayer(1).setCartoCSS($("#markerManzana").text());//Aqui se cambia el cartocss que tiene la capa por default y se va ubicar el css que se ocupara se encuentra en index
+			 layer.getSubLayer(1).setSQL("SELECT * FROM colonias_ok ORDER BY nombre_id ASC");//consulta para poder ver poligono pintado
+			 layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){ //data =campos especificados, layer=numerodelayer - feature se renueva la seleccion anterior 
+	  			selectFeature("colonias_ok","cartodb_id = "+data.cartodb_id);//pimer cmapo dataset, segundo el filtro que se hara
+			 });//Fin layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){*/
 		
 			btnTools.addTo(maps);//botones que se agrean al mapa
-			// btnBaseMap.addTo(maps);//botonesde mapa base que se agrean al mapa
-			// $(".cartodb-logo").on( "click", "a");
 		}).error(function (err) {
 			console.log(err);
 		});
@@ -203,7 +193,8 @@ function bounry(user,table,sqlfilter,layer,map) {
 }
 
 //Funcion para seleccionar el poligono
-function selectFeature(table,sqlfilter){
+function selectFeature(table,sqlfilter, layer){
+
     if(maps.hasLayer(sltfeature)){
         maps.removeLayer(sltfeature);
     };
@@ -218,14 +209,47 @@ function selectFeature(table,sqlfilter){
 				fillColor:'#C4C5C6',
 				fillOpacity:0.2}
 			},
-			onEachFeature: function (feature, layers) {
-
+			// onEachFeature(feature, layer){
+			onEachFeature: function (feature, layer) {
+				/*layer.on({
+		        	mouseover: function highlight(e) {
+		        		highlight(e.target);
+		       		},
+		        	mouseout: function dehighlight(e) {
+		        	
+		        		dehighlight(e.target);
+		       		},
+		           	click: function select(e) {
+		            	select(e.target);
+		           	}
+		       	});*/
+				layer.on({
+					e: "",
+		            click: function select(e) {
+		            	select(e.target);
+		           }
+				});
             }
         }).addTo(maps);
         sltfeature.bringToBack();
     });
 }
 
+
+
+function onEachFeature(feature, layer) {
+       layer.on({
+           mouseover: function (e) {
+         highlight(e.target);
+       },
+           mouseout: function (e) {
+         dehighlight(e.target);
+       },
+           click: function (e) {
+             select(e.target);
+           }
+       });
+}
 
 //Leaflet botones de radios
 // callbackLeftlet = function(layer){
@@ -293,11 +317,14 @@ function fn_datainfo(geom, radius) {
 	var sql = new cartodb.SQL({
 		user : 'develop'
 	});
+
+	alert(radius);
+
 	if (radius != 0){
 		geom = "ST_Buffer(" + geom + "::geography," + radius + ")::geometry"
 	}
 
-	var strsql = "SELECT suc.ciclo,suc.sucursal,suc.folio,suc.ciudad,suc.colonia,suc.calle,suc.estatus,cat.description FROM sucursales suc inner join cat_estatus_pedido cat on suc.estatus = cat.cod_estatus where ST_contains(" + geom + ",suc.the_geom) or ST_Intersects(" + geom + ",suc.the_geom)";
+	var strsql ="SELECT * FROM (SELECT * FROM develop.alertas_alto_bajo_impacto WHERE alerta_alto_bajo_i = 1 UNION SELECT * FROM develop.alertas_alto_bajo_impacto WHERE alerta_alto_bajo_i = 0) AS EfectivaNo WHERE ST_contains(" + geom + ",the_geom) or ST_Intersects(" + geom + ",the_geom)  ORDER BY cartodb_id ASC";
 
 	sql.execute(strsql).done(function(data) {
 		var tpl = $('#infoData').html();

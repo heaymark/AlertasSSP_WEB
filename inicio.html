@@ -232,7 +232,7 @@
 		   polygon-fill: #0CB127;
 		}
 	</script> -->
-	<!-- Infowindows -->
+	<!-- Infowindows Alertas No Efectiva-->
 	<script type="infowindow/html" id="infowindow_template_no_efectiva">
 		<div class="cartodb-popup v2">
 			<a href="#close" class="cartodb-popup-close-button close">x</a>
@@ -249,6 +249,7 @@
 		  	<div class="cartodb-popup-tip-container"></div>
 		</div>
 	</script>
+	<!-- Infowindows Alertas Efectivas -->
 	<script type="infowindow/html" id="infowindow_template_efectiva">
 		<div class="cartodb-popup v2">
 			<a href="#close" class="cartodb-popup-close-button close">x</a>
@@ -265,7 +266,7 @@
 		  	<div class="cartodb-popup-tip-container"></div>
 		</div>
 	</script>
-
+	<!-- Template Modal del Buffer -->
 	<script  type="text/template" id="infoData">
 	    <% _.each(item, function(row,idx) { %>
 	    <tr>
@@ -419,6 +420,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal Generado del Burffer -->
     <div id="info" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" >
         <div class="modal-dialog modal-lg" role="document" >
             <div class="modal-content">

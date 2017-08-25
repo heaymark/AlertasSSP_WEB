@@ -18,7 +18,12 @@ function cmb(evt){
     }
 }
 
-function vmt(evt){
+/*function vmt(evt){
 
     $('#myModal').modal('show');
 }
+
+function dltfig() {
+    
+    geomTools.clearLayers();
+}*/

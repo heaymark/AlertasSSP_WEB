@@ -1,4 +1,6 @@
 var cartolayer, sltfeature, lyrs, mkrInicial, lyrRadio, maps, objlayerBase, highlight, dehighlight, select, layerbase, paramlayerbase, parammapbase, viz, vizparam, el, layers, user, api_key;
+var geomTools;
+var drawControl;
 //Se  obtiene de viz en carto
 var layerbase = 'https://{s}.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24';
 var paramlayerbase = {
@@ -75,6 +77,7 @@ $(function(){
 			 });//Fin layer.getSubLayer(1).on('featureClick', function(e, latlng, pos, data, lyer){*/
 		
 			btnTools.addTo(maps);//botones que se agrean al mapa
+			// btnDelete.addTo(maps);
 		}).error(function (err) {
 			console.log(err);
 		});
@@ -167,7 +170,6 @@ $(function(){
 		});//Fin cuadrante
 
 		callbackLeftlet(lyrs);
-			
 });
 
 //Funcion para acercar al mapa 
@@ -211,18 +213,6 @@ function selectFeature(table,sqlfilter, layer){
 			},
 			// onEachFeature(feature, layer){
 			onEachFeature: function (feature, layer) {
-				/*layer.on({
-		        	mouseover: function highlight(e) {
-		        		highlight(e.target);
-		       		},
-		        	mouseout: function dehighlight(e) {
-		        	
-		        		dehighlight(e.target);
-		       		},
-		           	click: function select(e) {
-		            	select(e.target);
-		           	}
-		       	});*/
 				layer.on({
 					e: "",
 		            click: function select(e) {
@@ -234,8 +224,6 @@ function selectFeature(table,sqlfilter, layer){
         sltfeature.bringToBack();
     });
 }
-
-
 
 function onEachFeature(feature, layer) {
        layer.on({
@@ -259,16 +247,91 @@ function callbackLeftlet(layer){
     var drawControl = new L.Control.Draw({
         position : 'topleft',
         draw : {
-        	polyline : true,
-        	polygon : false,
-        	rectangle : true,
-        	marker : false,
-        	circle: true
+        	/*
+	        	polyline : true,
+	        	polygon : false,
+	        	rectangle : true,
+	        	marker : false,
+	        	circle: true
+        	*/
+			polyline: {
+				allowIntersection: false,//linea pueden cruzarse
+				drawError: {//opc. conf. error si detecta interseccion
+					color: '#b00b00',
+					timeout: 1000
+				},
+				guidelineDistance:15,//distancia pixeles entre guion
+				shapeOptions: {//opc. al dibujar
+					stroke: true,
+					color: '#FF33D1',
+					weight: 6,
+					opacity: 2.5,
+					fill: false,
+					clickable: true
+				},
+				metric: true,//sistema de medicion metrico o imperial
+				zIndexOffset:2000,//num alto para dibujar sobre todas las capas
+				repeatMode:false,//herramienta de dibujo permanece habilitada despues de dibujar una forma
+				showLength: true//Si se debe mostrar la distancia en la información de herramientas
+			},
+			polygon: {
+				allowIntersection: false,//linea pueden cruzarse
+				drawError: {//opc. conf. error si detecta interseccion
+					color: '#b00b00',
+					timeout: 1000
+				},
+				guidelineDistance:15,//distancia pixeles entre guion
+				shapeOptions: {//opc. al dibujar
+					color: '#bada55',
+					stroke: true,
+					weight: 4,
+					opacity: 0.5,
+					fill: true,//llenar
+					clickable: true
+				},
+				metric: true,//sistema de medicion metrico o imperial
+				zIndexOffset:2000,//num alto para dibujar sobre todas las capas
+				repeatMode:false,//herramienta de dibujo permanece habilitada despues de dibujar una forma
+				showArea: true, //muestra area dibujada valida solo para polygon
+				showLength: true//Si se debe mostrar la distancia en la información de herramientas
+			},
+			rectangle:{
+				shapeOptions: {
+					stroke: true,
+					color: '#3388ff',
+					weight: 4,
+					opacity: 0.5,
+					fill: true,
+					fillColor: null, //true y false same as color by default
+					fillOpacity: 0.2,
+					showArea: true,
+					clickable: true
+				},
+				metric: true,
+				repeatMode:false
+			},
+			circle: {
+				shapeOptions: { 
+					stroke: true,
+					color: '#662d91',
+					weight: 5,
+					opacity: 2.5,
+					fill: true,
+					fillColor: null, //true y false same as color by default
+					fillOpacity: 0.2,
+					clickable: true
+				},
+				showRadius: true,
+				metric: true, // Whether to use the metric measurement system or imperial
+				feet: true, // When not metric, use feet instead of yards for display
+				nautic: false // When not metric, not feet use nautic mile for display
+			},
+			marker: false
         },
         edit : {
         	featureGroup : geomTools,
         	edit : false,
-        	remove : false
+        	remove : true
         }
     });
 
@@ -280,9 +343,11 @@ function callbackLeftlet(layer){
         		var layer = e.layer;
                 var coord = layer.toGeoJSON();
                 
-                alert("Layer:"+layer);
-                alert("type:"+type);
-                alert("coord:"+JSON.stringify(coord));
+            	geomTools.addLayer(e.layer);//Dejar el drawcontrol en el visor
+
+                // alert("Layer:"+layer);
+                // alert("type:"+type);
+                // alert("coord:"+JSON.stringify(coord));
 
         		switch(type){
         			case "rectangle":
@@ -318,7 +383,7 @@ function fn_datainfo(geom, radius) {
 		user : 'develop'
 	});
 
-	alert(radius);
+	// alert(radius);
 
 	if (radius != 0){
 		geom = "ST_Buffer(" + geom + "::geography," + radius + ")::geometry"
@@ -345,6 +410,7 @@ function fn_datainfo(geom, radius) {
 
 // Botono en el mapa para la tabla en el modal
 var btnTools = L.control({position: 'topleft'});
+// var btnDelete = L.control({position: 'topleft'});
 
 btnTools.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'leaflet-bar'); // create a div with a class "info"
@@ -361,8 +427,27 @@ btnTools.onAdd = function (map) {
     return this._div;
 };
 
+/*btnDelete.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'leaflet-bar'); // create a div with a class "info"
+    this._div.setAttribute("id","btniddelete");
+    this._filtro = L.DomUtil.create('a','btnclasdelete',this._div);
+    this._filtro.setAttribute("id","btnmiid");
+
+    this._imgfiltro = L.DomUtil.create('i','',this._filtro);
+    this._imgfiltro.setAttribute("class","fa fa-trash");
+    this._imgfiltro.setAttribute("aria-hidden",true);
+    this._imgfiltro.setAttribute("style","margin:6px 8px;");
+
+    // L.DomEvent.addListener(this._filtro,'click',this.fnDelete,this);
+    L.DomEvent.addListener(this._filtro,'click',this);
+    return this._div;
+};*/
+
+
 btnTools.fnFilter = function () {
     $('#miModal').modal('show'); 
 };
 
+/*btnDelete.fnDelete = function () {
 
+}*/

@@ -477,7 +477,8 @@ function mapGrafica(e) {
 
             console.log(dataCfg);
             
-
+            graficapiehighcharts(totalAE,totalANE);
+        /*
 	        // Forma Grafica 
 	        var chart = {
 	            plotBackgroundColor: null,
@@ -515,7 +516,7 @@ function mapGrafica(e) {
 	                    //     sliced: false,
 	                    //     selected: false,
 	                    },{
-	                        name: 'Chrome',
+	                        name: 'Alertas No Efectivas',
 	                     	y:totalANE,
 	                    //     sliced: true,
 	                    //     selected: true
@@ -542,6 +543,6 @@ function mapGrafica(e) {
 	        json.series = series;
 	        json.plotOptions = plotOptions;
 	        $('#graficaCircular').highcharts(json);  
-
+	    */
     });//Fin .done(function(data){
 }//Fin Function

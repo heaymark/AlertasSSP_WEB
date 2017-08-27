@@ -1,6 +1,7 @@
 var chart;
 
-$(document).ready(function() {
+// $(document).ready(function() {
+function graficapiehighcharts(ae,ane) {
 
         // Build the chart
         // Forma 1 enviando el JSON
@@ -31,49 +32,36 @@ $(document).ready(function() {
             }
         };
 
-        var datos = mapGrafica();
-        console.log(datos[0].y);
-
         var series = [{
                type: 'pie',
                name: 'Alertas SSP',
-               data: 
-                    
-                    [
-                    // ['IE',       26.8],
-                    //  {
-                    //     name: 'Alertas No Efectivas',
-                    //     y: 50.8,
-                    //     sliced: false,
-                    //     selected: false
-                    // },
-                    {
-                     name: 'Alertas Efectivas',
-                     y: datos[0].y,
-                    //     sliced: false,
-                    //     selected: false,
-                    },{
-                         name: 'Chrome',
-                     y: datos[1].y,
-                       
-                    //     sliced: true,
-                    //     selected: true
-                    }
-                ]
-               
+               data:[
+                        {
+                            name: 'Alertas Efectivas',
+                            y: ae,
+                            //     sliced: false,
+                            //     selected: false,
+                        },{
+                            name: 'Alertas No Efectivas',
+                            y: ane,
+                            //     sliced: true,
+                            //     selected: true
+                        }
+                    ]
         }];
         // Radialize the colors
-        Highcharts.getOptions().colors = Highcharts.map(
-            Highcharts.getOptions().colors, function (color) {
-                return {
-                    radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-                    stops: [
-                        [0, color],
-                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-                    ]
-                };
-            }
-        );
+        /*    Highcharts.getOptions().colors = Highcharts.map(
+                Highcharts.getOptions().colors, function (color) {
+                    return {
+                        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+                        stops: [
+                            [0, color],
+                            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                        ]
+                    };
+                }
+            );
+        */
         // se crea el json 
         var json = {};   
         json.chart = chart; 
@@ -82,4 +70,4 @@ $(document).ready(function() {
         json.series = series;
         json.plotOptions = plotOptions;
         $('#graficaCircular').highcharts(json);  
-});
+}

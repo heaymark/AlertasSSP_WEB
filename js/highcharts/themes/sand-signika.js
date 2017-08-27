@@ -12,7 +12,7 @@
 /* global document */
 // Load the fonts
 Highcharts.createElement('link', {
-   href: 'https://fonts.googleapis.com/css?family=Signika:400,700',
+   // href: 'https://fonts.googleapis.com/css?family=Signika:400,700',
    rel: 'stylesheet',
    type: 'text/css'
 }, null, document.getElementsByTagName('head')[0]);
@@ -30,7 +30,7 @@ Highcharts.theme = {
    chart: {
       backgroundColor: null,
       style: {
-         fontFamily: 'Signika, serif'
+         fontFamily: 'Arial, serif'
       }
    },
    title: {

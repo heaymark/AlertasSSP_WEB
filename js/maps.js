@@ -82,6 +82,8 @@ $(function(){
 			console.log(err);
 		});
 
+    	maps.on("zoomlevelschange",mapGrafica);
+    	maps.on("moveend",mapGrafica);
 
 		//se crea objeto para sql
 		objsql = new cartodb.SQL({
@@ -195,7 +197,7 @@ function bounry(user,table,sqlfilter,layer,map) {
 }
 
 //Funcion para seleccionar el poligono
-function selectFeature(table,sqlfilter, layer){
+function selectFeature(table,sqlfilter,layer){
 
     if(maps.hasLayer(sltfeature)){
         maps.removeLayer(sltfeature);
@@ -211,10 +213,8 @@ function selectFeature(table,sqlfilter, layer){
 				fillColor:'#C4C5C6',
 				fillOpacity:0.2}
 			},
-			// onEachFeature(feature, layer){
 			onEachFeature: function (feature, layer) {
 				layer.on({
-					e: "",
 		            click: function select(e) {
 		            	select(e.target);
 		           }
@@ -225,6 +225,7 @@ function selectFeature(table,sqlfilter, layer){
     });
 }
 
+//Funcion para habilitar acciones al seleccionar el poligono
 function onEachFeature(feature, layer) {
        layer.on({
            mouseover: function (e) {
@@ -239,8 +240,7 @@ function onEachFeature(feature, layer) {
        });
 }
 
-//Leaflet botones de radios
-// callbackLeftlet = function(layer){
+//Leaflet botones de poligonos o radios
 function callbackLeftlet(layer){
     lyrLeft = layer;
     var geomTools = new L.FeatureGroup();
@@ -366,6 +366,7 @@ function callbackLeftlet(layer){
     });
 }
 
+// Funcion para obtener la geometria y cordenadas del radio
 function fn_newgeomJson(GeoJson) {
 	var SqlJson = {
 		'type' : '',
@@ -377,6 +378,7 @@ function fn_newgeomJson(GeoJson) {
 	return geom;
 }
 
+// Funcion para llamar el modal despues del radio
 function fn_datainfo(geom, radius) {
 	$("#loadingMap").show();
 	var sql = new cartodb.SQL({
@@ -404,14 +406,11 @@ function fn_datainfo(geom, radius) {
 	});
 }
 
-// objMapLeft  =  new cdmxCarto(layerbase,viz,'maps',param,paramlayerbase,parammapbase);
-// objMapLeft.renderMap(callbackLeftlet);
-
-
 // Botono en el mapa para la tabla en el modal
 var btnTools = L.control({position: 'topleft'});
 // var btnDelete = L.control({position: 'topleft'});
 
+// Funcion para adjuntar un boton leaflet al mapa 
 btnTools.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'leaflet-bar'); // create a div with a class "info"
     this._div.setAttribute("id","miiddiv");
@@ -427,27 +426,122 @@ btnTools.onAdd = function (map) {
     return this._div;
 };
 
-/*btnDelete.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'leaflet-bar'); // create a div with a class "info"
-    this._div.setAttribute("id","btniddelete");
-    this._filtro = L.DomUtil.create('a','btnclasdelete',this._div);
-    this._filtro.setAttribute("id","btnmiid");
-
-    this._imgfiltro = L.DomUtil.create('i','',this._filtro);
-    this._imgfiltro.setAttribute("class","fa fa-trash");
-    this._imgfiltro.setAttribute("aria-hidden",true);
-    this._imgfiltro.setAttribute("style","margin:6px 8px;");
-
-    // L.DomEvent.addListener(this._filtro,'click',this.fnDelete,this);
-    L.DomEvent.addListener(this._filtro,'click',this);
-    return this._div;
-};*/
-
-
+//Funcion para mandar a llamar al modal
 btnTools.fnFilter = function () {
     $('#miModal').modal('show'); 
 };
 
-/*btnDelete.fnDelete = function () {
+// Funcion para actualizar el mapa conforme se mueve el mapa
+function mapGrafica(e) {
+    var dataGraph = [];
+    var elArray = new Array();
+    var dataCfg;
+    var totalAE = 0; 
+    var totalANE = 0;
+    console.log("layer loaded");
 
-}*/
+    Ymax = maps.getBounds().getNorth();
+    Ymin = maps.getBounds().getSouth();
+    Xmax = maps.getBounds().getEast();
+    Xmin = maps.getBounds().getWest();
+
+    var sql =  new cartodb.SQL({
+        user:"develop"
+    }); 
+
+    sql.execute("SELECT cartodb_id, alerta_alto_bajo_i, asociacion, cadena, detalleopc, detenidos FROM alertas_alto_bajo_impacto_union WHERE ST_Contains(ST_MakeEnvelope("+Xmin+","+Ymin+","+Xmax+","+Ymax+",4326),the_geom) ORDER BY cartodb_id")
+
+        .done(function(data){
+
+            for (idx in data.rows){
+                
+                if (data.rows[idx].alerta_alto_bajo_i == 1) {
+                	totalAE = parseInt(totalAE) + parseInt(1);
+                } else {
+                	totalANE = parseInt(totalANE) + 1;
+                }
+
+            }
+
+            dataCfg = 
+                [
+                    {
+                    	name:"Alertas Efectivas",
+                        y:totalAE,
+                    },{
+                    	
+                        name:"Alertas No Efectivas",
+                        y:totalANE,
+                    }
+                ];
+
+            console.log(dataCfg);
+            
+
+	        // Forma Grafica 
+	        var chart = {
+	            plotBackgroundColor: null,
+	            plotBorderWidth: null,
+	            plotShadow: false
+	        };
+
+	        var title= {
+	            text: 'Alertas Efectivas y No Efectivas'
+	        };
+	        var tooltip= {
+	            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	        };
+	        var plotOptions= {
+	            pie: {
+	                allowPointSelect: true,
+	                cursor: 'pointer',
+	                
+	                dataLabels: {
+	                    enabled: true,
+	                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+	                        style: {
+	                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+	                        }
+	                }
+	            }
+	        };
+	        var series = [{
+	               type: 'pie',
+	               name: 'Alertas SSP',
+	               data:[
+	                    {
+	                    	name: 'Alertas Efectivas',
+	                     	y:totalAE,
+	                    //     sliced: false,
+	                    //     selected: false,
+	                    },{
+	                        name: 'Chrome',
+	                     	y:totalANE,
+	                    //     sliced: true,
+	                    //     selected: true
+	                    }
+	                ]
+	        }];
+			    // // Radialize the colors
+			    // Highcharts.getOptions().colors = Highcharts.map(
+			    //     Highcharts.getOptions().colors, function (color) {
+			    //         return {
+			    //             radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+			    //             stops: [
+			    //                 [0, color],
+			    //                 [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+			    //             ]
+			    //         };
+			    //     }
+			    // );
+			    // se crea el json 
+	        var json = {};   
+	        json.chart = chart; 
+	        json.title = title;     
+	        json.tooltip = tooltip;  
+	        json.series = series;
+	        json.plotOptions = plotOptions;
+	        $('#graficaCircular').highcharts(json);  
+
+    });//Fin .done(function(data){
+}//Fin Function

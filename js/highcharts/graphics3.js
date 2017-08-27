@@ -30,24 +30,37 @@ $(document).ready(function() {
                 }
             }
         };
+
+        var datos = mapGrafica();
+        console.log(datos[0].y);
+
         var series = [{
                type: 'pie',
                name: 'Alertas SSP',
-               data: [
-                  ['Alertas Efectivas',   49.2],
-                  ['Alertas No Efectivas',   50.7],
-                  // ['Firefox',   45.0],
-                  ['IE',       26.8],
-                  {
-                     name: 'Chrome',
-                     y: 12.8,
-                     sliced: true,
-                     selected: true
-                  },
-                  // ['Safari',    8.5],
-                  // ['Opera',     6.2],
-                  // ['Others',   0.7]
-               ]
+               data: 
+                    
+                    [
+                    // ['IE',       26.8],
+                    //  {
+                    //     name: 'Alertas No Efectivas',
+                    //     y: 50.8,
+                    //     sliced: false,
+                    //     selected: false
+                    // },
+                    {
+                     name: 'Alertas Efectivas',
+                     y: datos[0].y,
+                    //     sliced: false,
+                    //     selected: false,
+                    },{
+                         name: 'Chrome',
+                     y: datos[1].y,
+                       
+                    //     sliced: true,
+                    //     selected: true
+                    }
+                ]
+               
         }];
         // Radialize the colors
         Highcharts.getOptions().colors = Highcharts.map(
